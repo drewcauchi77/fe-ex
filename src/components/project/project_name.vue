@@ -1,19 +1,20 @@
 <script setup lang="ts">
-import { ref, defineEmits } from 'vue'
+import { ref, defineEmits, computed } from 'vue'
+import { useRouter } from 'vue-router'
 import { QInput, QBtn, useQuasar } from 'quasar'
 import { useProjectStore } from '@/stores/project'
 
 const $q = useQuasar()
 const projectStore = useProjectStore()
-const emit = defineEmits(['goToNextStep'])
+const router = useRouter()
 
+const emit = defineEmits(['goToNextStep'])
 const projectName = ref<string>('')
 
+const shouldDisableButtons = computed(() => projectStore.state.project.name !== null || projectName.value === '')
+
 const startProject = (): void => {
-  projectStore.createProject(
-    projectName.value,
-    'file -> components/project/project_name.vue; method -> saveName()'
-  )
+  projectStore.createProject(projectName.value, 'file -> components/project/project_name.vue; method -> startProject()')
 
   $q.notify({
     color: 'positive',
@@ -26,13 +27,15 @@ const startProject = (): void => {
 </script>
 
 <template>
-  <section>
-    <div class="row">
+  <section class="shadow-2 bg-dark q-pa-lg rounded-borders">
+    <h1 class="text-h6 text-black q-mx-none q-mt-none q-mb-lg">Create Project</h1>
+
+    <div class="input-fields">
       <q-input
         v-model="projectName"
         outlined
         label-slot
-        class="col-grow"
+        class="col-grow bg-white rounded-borders text-sm q-mb-lg"
         :readonly="projectStore.state.project.name !== null"
       >
         <template v-slot:label>
@@ -42,17 +45,21 @@ const startProject = (): void => {
           </span>
         </template>
       </q-input>
-      <q-btn
-        v-if="projectStore.state.project.name === null"
-        class="q-my-sm q-ml-sm"
-        color="primary"
-        icon="create"
-        label="Start Project"
-        @click="startProject()"
-        :disable="projectName === ''"
-      />
+
+      <div class="row justify-end">
+        <q-btn
+          class="q-ml-md q-mb-sm"
+          rounded
+          outline
+          color="negative"
+          label="Cancel"
+          @click="router.push({ name: 'Projects' })"
+          :disable="shouldDisableButtons"
+        />
+        <q-btn class="q-ml-md q-mb-sm" rounded color="primary" label="Create" @click="startProject()" :disable="shouldDisableButtons" />
+      </div>
     </div>
   </section>
 </template>
 
-<style scoped></style>
+<style scoped lang="scss"></style>

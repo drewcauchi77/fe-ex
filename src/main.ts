@@ -5,12 +5,10 @@ import { Quasar, Notify } from 'quasar'
 import App from './App.vue'
 import router from './router'
 
-// Import icon libraries
 import '@quasar/extras/roboto-font/roboto-font.css'
 import '@quasar/extras/material-icons/material-icons.css'
-
-// Import Quasar css
 import 'quasar/src/css/index.sass'
+import './assets/global.scss'
 
 const app = createApp(App)
 

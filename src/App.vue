@@ -16,10 +16,10 @@ onMounted(() => {
 </script>
 
 <template>
-  <q-layout class="layout q-my-none q-mx-auto" v-if="projectStore.state.projectList">
-    <q-page-container>
+  <q-layout class="bg-white" v-if="projectStore.state.projectList">
+    <q-page-container class="container q-my-none q-mx-auto">
       <main class="q-pa-md">
-        <navigation></navigation>
+        <!-- <navigation></navigation> -->
         <router-view />
       </main>
     </q-page-container>
@@ -27,7 +27,7 @@ onMounted(() => {
 </template>
 
 <style scoped lang="scss">
-.layout {
+.container {
   max-width: 1400px;
 }
 </style>

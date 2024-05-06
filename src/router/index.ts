@@ -1,4 +1,4 @@
-import { createRouter, createWebHistory, onBeforeRouteLeave } from 'vue-router'
+import { createRouter, createWebHistory } from 'vue-router'
 import Dashboard from '../views/dashboard_view.vue'
 
 const router = createRouter({
@@ -6,7 +6,7 @@ const router = createRouter({
   routes: [
     {
       path: '/',
-      name: 'dashboard',
+      name: 'Dashboard',
       component: Dashboard
     },
     {
@@ -14,12 +14,12 @@ const router = createRouter({
       children: [
         {
           path: '',
-          name: 'projects',
+          name: 'Projects',
           component: () => import('../views/project/projects_view.vue')
         },
         {
           path: 'create',
-          name: 'projects-create',
+          name: 'CreateProject',
           component: () => import('../views/project/create_view.vue')
         }
       ]

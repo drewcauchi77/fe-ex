@@ -6,7 +6,7 @@ import ProjectList from '@/components/project/project_list.vue'
 <template>
   <section class="q-mt-md">
     <div class="row justify-end">
-      <q-btn :to="{ name: 'projects-create' }" icon="add" color="positive" label="Create Project" />
+      <q-btn :to="{ name: 'CreateProject' }" icon="add" color="positive" label="Create Project" />
     </div>
     <project-list />
   </section>

@@ -2,9 +2,9 @@
 import { ref, defineAsyncComponent } from 'vue'
 import { onBeforeRouteLeave } from 'vue-router'
 import { useProjectStore } from '@/stores/project'
+import Breadcrumb from '@/components/shared/breadcrumb.vue'
 import ProjectName from '@/components/project/project_name.vue'
 const Feed = defineAsyncComponent(() => import('@/components/feed/feed.vue'))
-const FeedFrames = defineAsyncComponent(() => import('@/components/feed/feed_frames.vue'))
 
 const projectStore = useProjectStore()
 
@@ -19,19 +19,14 @@ onBeforeRouteLeave((to, from, next) => {
     if (!answer) {
       next(false)
     } else {
-      projectStore.setCreatedProjectFrames(
-        [],
-        'file -> views/project/create_view.vue; method -> onBeforeRouteLeave()'
-      )
+      projectStore.setCreatedProjectFrames([], 'file -> views/project/create_view.vue; method -> onBeforeRouteLeave()')
       if (projectStore.state.projectList) {
         projectStore.setProjectList(
           [projectStore.state.project, ...projectStore.state.projectList],
           'file -> views/project/create_view.vue; method -> onBeforeRouteLeave()'
         )
       }
-      projectStore.resetCreatedProject(
-        'file -> views/project/create_view.vue; method -> onBeforeRouteLeave()'
-      )
+      projectStore.resetCreatedProject('file -> views/project/create_view.vue; method -> onBeforeRouteLeave()')
       next()
     }
   } else {
@@ -41,10 +36,10 @@ onBeforeRouteLeave((to, from, next) => {
 </script>
 
 <template>
-  <section class="q-mt-md">
+  <section>
+    <breadcrumb />
     <project-name v-if="currentStep >= 1" @goToNextStep="currentStep += 1" />
-    <feed v-if="currentStep >= 2" @goToNextStep="currentStep += 1" />
-    <feed-frames v-if="currentStep >= 3" id="feed-frames" />
+    <feed v-if="currentStep >= 2" />
   </section>
 </template>
 

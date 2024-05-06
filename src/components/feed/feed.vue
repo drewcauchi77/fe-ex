@@ -1,14 +1,17 @@
 <script setup lang="ts">
-import { ref, defineEmits } from 'vue'
+import { ref, computed } from 'vue'
 import { QBtn, QSpinnerIos, useQuasar } from 'quasar'
 import { useProjectStore } from '@/stores/project'
+import FeedFrames from './feed_frames.vue'
 
 const $q = useQuasar()
 const projectStore = useProjectStore()
-const emit = defineEmits(['goToNextStep'])
 
 const feed = ref<HTMLVideoElement | null>(null)
 const feedStatus = ref<string>('stopped')
+const showCapturedFrames = ref<boolean>(false)
+
+const hasFeedStarted = computed(() => feedStatus.value === 'started')
 
 const startFeed = async (): Promise<void> => {
   try {
@@ -22,7 +25,6 @@ const startFeed = async (): Promise<void> => {
       message: 'There has been an error starting your feed!',
       position: 'top'
     })
-    console.error('!!! Error Starting Feed !!!', error)
   }
 }
 
@@ -57,14 +59,18 @@ const stopFeed = (): void => {
   if (feed.value && feed.value.srcObject) {
     feed.value.srcObject = null
     feedStatus.value = 'stopped'
-    emit('goToNextStep')
+    showCapturedFrames.value = true
+    setTimeout(function () {
+      document.querySelector('#feed-frames')?.scrollIntoView({ behavior: 'smooth' })
+    }, 400)
   }
 }
 </script>
 
 <template>
-  <section class="q-mt-md">
-    <div class="bg-black relative-position">
+  <section class="shadow-2 bg-dark q-mt-lg q-pa-lg rounded-borders">
+    <h1 class="text-h6 text-black q-mx-none q-mt-none q-mb-lg">Connect Feed</h1>
+    <div class="bg-black relative-position rounded-borders">
       <video ref="feed" autoplay class="video-container q-mt-none q-mx-auto"></video>
       <q-btn
         round
@@ -75,31 +81,14 @@ const stopFeed = (): void => {
         v-if="feedStatus === 'stopped'"
         :disable="!projectStore.state.project.name"
       />
-      <q-spinner-ios
-        v-else-if="feedStatus === 'loading'"
-        color="primary"
-        class="loading absolute-center"
-      />
+      <q-spinner-ios v-else-if="feedStatus === 'loading'" color="primary" class="loading absolute-center" />
     </div>
-    <div class="settings q-py-md text-white text-center">
-      <q-btn
-        class="q-ma-sm"
-        color="secondary"
-        icon="camera_alt"
-        label="Capture Frame"
-        @click="captureFeedFrame()"
-        :disable="feedStatus !== 'started'"
-      />
-      <q-btn
-        class="q-ma-sm"
-        color="negative"
-        icon="stop"
-        label="Stop Feed & Review"
-        @click="stopFeed()"
-        :disable="feedStatus !== 'started'"
-      />
+    <div class="row q-pt-md justify-end">
+      <q-btn class="q-ml-md q-mb-sm" rounded color="positive" label="Stop Feed & Review" @click="stopFeed()" :disable="!hasFeedStarted" />
+      <q-btn class="q-ml-md q-mb-sm" rounded color="primary" label="Capture Frame" @click="captureFeedFrame()" :disable="!hasFeedStarted" />
     </div>
   </section>
+  <feed-frames v-if="showCapturedFrames" id="feed-frames" />
 </template>
 
 <style scoped lang="scss">
