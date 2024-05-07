@@ -1,20 +1,28 @@
+<!-- !!! Final !!! -->
 <script setup lang="ts">
 import { RouterLink, useRouter } from 'vue-router'
-import type { Router } from 'vue-router'
+import type { Router, RouteLocationNormalizedLoaded } from 'vue-router'
 
 const router: Router = useRouter()
+
+const backRoute: string = (router.options.history.state.back as string) ?? '/'
+const getBackRouteTitle: RouteLocationNormalizedLoaded | undefined = router.resolve(backRoute)
 </script>
 
 <template>
   <section class="breadcrumb q-py-lg q-pl-lg rounded-borders">
-    <router-link :to="router.options.history.state.back ? { path: `${router.options.history.state.back}` } : { path: '/' }">
-      Go Back
+    <router-link :to="{ path: `${backRoute}` }" class="text-black">
+      Go Back{{ getBackRouteTitle?.meta?.title ? ` to ${getBackRouteTitle.meta.title}` : '' }}
     </router-link>
   </section>
 </template>
 
 <style scoped lang="scss">
-.breadcrumb {
-  height: fit-content;
+a {
+  text-decoration: none;
+  transition: 0.3s all;
+  &:hover {
+    text-decoration: underline;
+  }
 }
 </style>

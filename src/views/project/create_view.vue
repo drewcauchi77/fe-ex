@@ -1,19 +1,25 @@
+<!-- !!! Final !!! -->
 <script setup lang="ts">
 import { ref, defineAsyncComponent } from 'vue'
 import { onBeforeRouteLeave } from 'vue-router'
 import { useProjectStore } from '@/stores/project'
+import type { Ref } from 'vue'
+import type { RouteLocationNormalizedLoaded, RouteLocationNormalized } from 'vue-router'
+
 import Breadcrumb from '@/components/shared/breadcrumb.vue'
 import ProjectName from '@/components/project/project_name.vue'
 const Feed = defineAsyncComponent(() => import('@/components/feed/feed.vue'))
 
 const projectStore = useProjectStore()
 
-const currentStep = ref<number>(1)
+const currentStep: Ref<number> = ref(1)
 
-onBeforeRouteLeave((to, from, next) => {
+onBeforeRouteLeave((to: RouteLocationNormalized, from: RouteLocationNormalizedLoaded, next: Function) => {
   if (projectStore.getCurrentProjectName) {
     const answer = window.confirm(
-      `Are you sure you want to leave? ${projectStore.getFeedFramesTaken.length > 0 ? 'Your captured feed frames will not be saved!' : 'You have not yet captured any feed frames!'}`
+      `Are you sure you want to leave? ${
+        projectStore.feedFrames.length > 0 ? 'Your captured feed frames will not be saved!' : 'You have not yet captured any feed frames!'
+      }`
     )
 
     if (!answer) {

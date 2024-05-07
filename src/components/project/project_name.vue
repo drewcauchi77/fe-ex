@@ -1,20 +1,26 @@
+<!-- !!! Final !!! -->
 <script setup lang="ts">
 import { ref, defineEmits, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { QInput, QBtn, useQuasar } from 'quasar'
 import { useProjectStore } from '@/stores/project'
 
+import type { Ref } from 'vue'
+import type { Router } from 'vue-router'
+
 const $q = useQuasar()
 const projectStore = useProjectStore()
-const router = useRouter()
+const router: Router = useRouter()
 
-const emit = defineEmits(['goToNextStep'])
-const projectName = ref<string>('')
+const projectName: Ref<string> = ref('')
+const emit = defineEmits<{
+  (event: 'goToNextStep'): void
+}>()
 
-const shouldDisableButtons = computed(() => projectStore.getCurrentProjectName !== null || projectName.value === '')
+const shouldDisableButtons = computed((): boolean => projectStore.getCurrentProjectName !== null || projectName.value === '')
 
-const startProject = (): void => {
-  if (projectStore.getProjectList) {
+const handleProjectCreation = (): void => {
+  if (projectStore.projectList) {
     const projectId: string = crypto.randomUUID()
 
     projectStore.setProjectList(
@@ -25,12 +31,12 @@ const startProject = (): void => {
           createdAt: new Date().toLocaleString(),
           feedFrames: []
         },
-        ...projectStore.getProjectList
+        ...projectStore.projectList
       ],
-      'file -> components/project/project_name.vue; method -> startProject()'
+      'file -> components/project/project_name.vue; method -> handleProjectCreation()'
     )
 
-    projectStore.setCurrentProjectID(projectId, 'file -> components/project/project_name.vue; method -> startProject()')
+    projectStore.setCurrentProjectID(projectId, 'file -> components/project/project_name.vue; method -> handleProjectCreation()')
   }
 
   $q.notify({
@@ -73,7 +79,14 @@ const startProject = (): void => {
           @click="router.push({ name: 'Projects' })"
           :disable="shouldDisableButtons"
         />
-        <q-btn class="q-ml-md q-mb-sm" rounded color="primary" label="Create" @click="startProject()" :disable="shouldDisableButtons" />
+        <q-btn
+          class="q-ml-md q-mb-sm"
+          rounded
+          color="primary"
+          label="Create"
+          @click="handleProjectCreation()"
+          :disable="shouldDisableButtons"
+        />
       </div>
     </div>
   </section>

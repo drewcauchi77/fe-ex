@@ -1,21 +1,37 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { useProjectStore } from '@/stores/project'
 import { QInput, QBadge, QBtn } from 'quasar'
+import { useProjectStore } from '@/stores/project'
+import type { Ref } from 'vue'
 
 const projectStore = useProjectStore()
 
-const tag = ref('')
-const tagList = ref<string[]>([])
+const tag: Ref<string> = ref('')
 const props = defineProps<{
   frameIndex: number | null
 }>()
 
-function saveTag() {
-  // To check
-  if (!!tag.value?.trim()) {
-    tagList.value.push(tag.value)
+const saveTag = (): void => {
+  if (!!tag.value?.trim() && props.frameIndex !== null) {
+    const frames = [...projectStore.feedFrames]
+    frames[props.frameIndex].tags.push(tag.value)
+    projectStore.setFeedFramesTaken(frames, 'file -> components/frame/frame_tags.vue; method -> saveTag()')
     tag.value = ''
+  }
+}
+
+const removeTag = (tagIndex: number): void => {
+  if (props.frameIndex !== null) {
+    const frames = projectStore.feedFrames.map((object) => ({ ...object }))
+    frames[props.frameIndex].tags = [
+      ...frames[props.frameIndex].tags.slice(0, tagIndex),
+      ...frames[props.frameIndex].tags.slice(tagIndex + 1)
+    ]
+
+    projectStore.setFeedFramesTaken(
+      frames.map((frame) => ({ ...frame })),
+      'file -> components/frame/frame_tags.vue; method -> removeTag()'
+    )
   }
 }
 </script>
@@ -23,10 +39,17 @@ function saveTag() {
 <template>
   <section class="q-mt-lg">
     <q-input outlined v-model="tag" @keydown.enter="saveTag()" label="Add tags" />
-    <div class="q-mt-md">
-      <q-badge rounded outline color="primary" v-for="tag in tagList" :key="tag" class="badge q-mr-sm q-mb-sm q-pl-sm q-py-none q-pr-none">
+    <div class="q-mt-md" v-if="props.frameIndex !== null">
+      <q-badge
+        rounded
+        outline
+        color="primary"
+        v-for="(tag, index) in projectStore.feedFrames[props.frameIndex].tags"
+        :key="index"
+        class="badge q-mr-sm q-mb-sm q-pl-sm q-py-none q-pr-none"
+      >
         <span>{{ tag }}</span>
-        <q-btn class="remove-tag q-my-none q-mr-none q-ml-sm q-pa-none" rounded color="primary" icon="close" />
+        <q-btn class="remove-tag q-my-none q-mr-none q-ml-sm q-pa-none" rounded color="primary" icon="close" @click="removeTag(index)" />
       </q-badge>
     </div>
   </section>

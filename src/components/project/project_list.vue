@@ -12,8 +12,8 @@ const goToProjectPage = (id: string): void => {
 }
 
 const deleteProject = (projectIndex: number): void => {
-  if (projectStore.getProjectList) {
-    const projects = projectStore.getProjectList.filter((_, index) => index !== projectIndex)
+  if (projectStore.projectList) {
+    const projects = projectStore.projectList.filter((_, index) => index !== projectIndex)
     projectStore.setProjectList(projects, 'file -> components/project/project_list.vue; method -> deleteProject()')
 
     $q.notify({
@@ -37,20 +37,15 @@ const deleteProject = (projectIndex: number): void => {
         </tr>
       </thead>
       <tbody class="bg-grey-3">
-        <template v-if="projectStore.getProjectList && projectStore.getProjectList.length > 0">
-          <tr
-            v-for="(project, index) in projectStore.getProjectList"
-            :key="index"
-            @click="goToProjectPage(project.id)"
-            class="cursor-pointer"
-          >
+        <template v-if="projectStore.projectList && projectStore.projectList.length > 0">
+          <tr v-for="(project, index) in projectStore.projectList" :key="index" @click="goToProjectPage(project.id)" class="cursor-pointer">
             <td class="text-left">{{ project.name }}</td>
             <td class="text-right">{{ project.feedFrames.length }}</td>
             <td class="text-right">{{ project.createdAt }}</td>
             <td class="text-right">
               <div class="row column items-end">
-                <q-btn rounded color="positive" label="Edit Frame" class="q-ma-sm" @click="goToProjectPage(project.id)" />
-                <q-btn rounded outline color="negative" class="q-ma-sm" label="Delete Frame" @click.stop="deleteProject(index)" />
+                <q-btn rounded color="positive" label="Open Project" class="q-ma-sm" @click="goToProjectPage(project.id)" />
+                <q-btn rounded outline color="negative" class="q-ma-sm" label="Delete Project" @click.stop="deleteProject(index)" />
               </div>
             </td>
           </tr>

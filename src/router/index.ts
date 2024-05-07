@@ -7,7 +7,10 @@ const router = createRouter({
     {
       path: '/',
       name: 'Dashboard',
-      component: Dashboard
+      component: Dashboard,
+      meta: {
+        title: 'Dashboard'
+      }
     },
     {
       path: '/projects',
@@ -15,19 +18,33 @@ const router = createRouter({
         {
           path: '',
           name: 'Projects',
-          component: () => import('../views/project/projects_view.vue')
+          component: () => import('../views/project/projects_view.vue'),
+          meta: {
+            title: 'Projects'
+          }
         },
         {
           path: 'create',
           name: 'CreateProject',
-          component: () => import('../views/project/create_view.vue')
+          component: () => import('../views/project/create_view.vue'),
+          meta: {
+            title: 'Create Project'
+          }
         },
         {
           path: ':id',
           name: 'SingleProject',
-          component: () => import('../views/project/single_view.vue')
+          component: () => import('../views/project/single_view.vue'),
+          meta: {
+            title: 'Project'
+          }
         }
       ]
+    },
+    {
+      path: '/:pathMatch(.*)*',
+      name: 'NotFound',
+      component: () => import('../views/error_view.vue')
     }
   ]
 })

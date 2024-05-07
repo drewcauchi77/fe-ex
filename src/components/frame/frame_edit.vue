@@ -19,9 +19,9 @@ const props = defineProps<{
     <q-separator />
 
     <q-card-section class="q-pt-none">
-      <img :src="projectStore.getFeedFramesTaken[props.frameIndex].image" class="q-mb-lg" />
+      <img :src="projectStore.feedFrames[props.frameIndex].image" class="q-mb-lg" />
       <p class="q-mb-lg">
-        Created at <strong>{{ projectStore.getFeedFramesTaken[props.frameIndex].createdAt }}</strong>
+        Created at <strong>{{ projectStore.feedFrames[props.frameIndex].createdAt }}</strong>
       </p>
       <frame-tags :frameIndex="frameIndex" />
     </q-card-section>
