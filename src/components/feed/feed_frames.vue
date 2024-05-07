@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, defineAsyncComponent } from 'vue'
 import { useRouter } from 'vue-router'
 import { QMarkupTable, QBtn, QDialog, useQuasar } from 'quasar'
 import { useProjectStore } from '@/stores/project'
-import FrameEdit from '../frame/frame_edit.vue'
+const FrameEdit = defineAsyncComponent(() => import('@/components/frame/frame_edit.vue'))
 
 const $q = useQuasar()
 const router = useRouter()
@@ -18,23 +18,19 @@ const setFrameDialog = (reset: boolean, frameIndex?: number): void => {
 }
 
 const removeFrame = (frameIndex: number): void => {
-  const frames = projectStore.state.project.feedFrames.filter((_, index) => index !== frameIndex)
-  projectStore.setCreatedProjectFrames(frames, 'file -> components/feed/feed_frames.vue; method -> removeFrame()')
+  const frames = projectStore.getFeedFramesTaken.filter((_, index) => index !== frameIndex)
+  projectStore.setFeedFramesTaken(frames, 'file -> components/feed/feed_frames.vue; method -> removeFrame()')
 
   $q.notify({
-    color: 'positive',
+    color: 'info',
     message: 'Frame has been successfully removed!',
     position: 'top'
   })
 }
 
 const saveProject = (): void => {
-  if (projectStore.state.projectList) {
-    projectStore.setProjectList(
-      [projectStore.state.project, ...projectStore.state.projectList],
-      'file -> components/feed/feed_frames.vue; method -> saveProject()'
-    )
-  }
+  // To check
+  projectStore.getCurrentProject?.feedFrames.push(...projectStore.getFeedFramesTaken)
 
   $q.notify({
     color: 'positive',
@@ -43,7 +39,8 @@ const saveProject = (): void => {
   })
 
   router.push({ name: 'Projects' })
-  projectStore.resetCreatedProject('file -> components/feed/feed_frames.vue; method -> saveProject()')
+  projectStore.setFeedFramesTaken([], 'file -> components/feed/feed_frames.vue; method -> saveProject()')
+  projectStore.setCurrentProjectID(null, 'file -> components/feed/feed_frames.vue; method -> saveProject()')
 }
 </script>
 
@@ -62,17 +59,22 @@ const saveProject = (): void => {
       </thead>
 
       <tbody class="bg-grey-3">
-        <template v-if="projectStore.state.project.feedFrames.length > 0">
-          <tr v-for="(frame, index) in projectStore.state.project.feedFrames" :key="index">
+        <template v-if="projectStore.getFeedFramesTaken.length > 0">
+          <tr
+            v-for="(frame, index) in projectStore.getFeedFramesTaken"
+            :key="index"
+            @click="setFrameDialog(false, index)"
+            class="cursor-pointer"
+          >
             <td class="text-left image-cell">
               <img :src="frame.image" class="frame" />
             </td>
-            <td class="text-right">{{ frame.createdAt }}</td>
+            <td class="text-right">{{ frame.tags.length > 0 ? frame.tags : 'No Tags' }}</td>
             <td class="text-right">{{ frame.createdAt }}</td>
             <td class="text-right">
               <div class="row column items-end">
                 <q-btn rounded color="positive" label="Edit Frame" class="q-ma-sm" @click="setFrameDialog(false, index)" />
-                <q-btn rounded outline color="negative" class="q-ma-sm" label="Delete Frame" @click="removeFrame(index)" />
+                <q-btn rounded outline color="negative" class="q-ma-sm" label="Delete Frame" @click.stop="removeFrame(index)" />
               </div>
             </td>
           </tr>

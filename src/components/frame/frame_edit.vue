@@ -1,14 +1,13 @@
 <script setup lang="ts">
 import { QBtn, QCard, QSeparator, QCardSection, QCardActions } from 'quasar'
 import { useProjectStore } from '@/stores/project'
+import FrameTags from './frame_tags.vue'
 
 const projectStore = useProjectStore()
 
 const props = defineProps<{
   frameIndex: number | null
 }>()
-
-console.log(props.frameIndex)
 </script>
 
 <template>
@@ -19,18 +18,18 @@ console.log(props.frameIndex)
 
     <q-separator />
 
-    <q-card-section style="max-height: 50vh" class="scroll">
-      <img :src="projectStore.state.project.feedFrames[props.frameIndex].image" class="q-mb-lg" />
+    <q-card-section class="q-pt-none">
+      <img :src="projectStore.getFeedFramesTaken[props.frameIndex].image" class="q-mb-lg" />
       <p class="q-mb-lg">
-        Created at <strong>{{ projectStore.state.project.feedFrames[props.frameIndex].createdAt }}</strong>
+        Created at <strong>{{ projectStore.getFeedFramesTaken[props.frameIndex].createdAt }}</strong>
       </p>
+      <frame-tags :frameIndex="frameIndex" />
     </q-card-section>
 
     <q-separator />
 
     <q-card-actions align="right">
-      <q-btn class="q-ml-md q-mb-sm" rounded outline color="negative" label="Decline" v-close-popup />
-      <q-btn class="q-ml-md q-mb-sm" rounded color="primary" label="Save" v-close-popup />
+      <q-btn class="q-ml-md q-mb-sm" rounded outline color="negative" label="Close" v-close-popup />
     </q-card-actions>
   </q-card>
 </template>

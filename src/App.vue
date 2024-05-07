@@ -16,10 +16,10 @@ onMounted(() => {
 </script>
 
 <template>
-  <q-layout class="bg-white" v-if="projectStore.state.projectList">
+  <q-layout class="bg-white" v-if="projectStore.getProjectList">
     <q-page-container class="container q-my-none q-mx-auto">
       <main class="q-pa-md">
-        <!-- <navigation></navigation> -->
+        <navigation />
         <router-view />
       </main>
     </q-page-container>

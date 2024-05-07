@@ -11,22 +11,16 @@ const projectStore = useProjectStore()
 const currentStep = ref<number>(1)
 
 onBeforeRouteLeave((to, from, next) => {
-  if (projectStore.state.project.name) {
+  if (projectStore.getCurrentProjectName) {
     const answer = window.confirm(
-      `Are you sure you want to leave? ${projectStore.state.project.feedFrames.length > 0 ? 'Your captured feed frames will not be saved!' : 'You have not yet captured any feed frames!'}`
+      `Are you sure you want to leave? ${projectStore.getFeedFramesTaken.length > 0 ? 'Your captured feed frames will not be saved!' : 'You have not yet captured any feed frames!'}`
     )
 
     if (!answer) {
       next(false)
     } else {
-      projectStore.setCreatedProjectFrames([], 'file -> views/project/create_view.vue; method -> onBeforeRouteLeave()')
-      if (projectStore.state.projectList) {
-        projectStore.setProjectList(
-          [projectStore.state.project, ...projectStore.state.projectList],
-          'file -> views/project/create_view.vue; method -> onBeforeRouteLeave()'
-        )
-      }
-      projectStore.resetCreatedProject('file -> views/project/create_view.vue; method -> onBeforeRouteLeave()')
+      projectStore.setFeedFramesTaken([], 'file -> views/project/create_view.vue; method -> onBeforeRouteLeave()')
+      projectStore.setCurrentProjectID(null, 'file -> views/project/create_view.vue; method -> onBeforeRouteLeave()')
       next()
     }
   } else {

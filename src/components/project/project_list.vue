@@ -1,18 +1,20 @@
 <script setup lang="ts">
+import { useRouter } from 'vue-router'
 import { QMarkupTable, QBtn, useQuasar } from 'quasar'
 import { useProjectStore } from '@/stores/project'
 
+const router = useRouter()
 const $q = useQuasar()
 const projectStore = useProjectStore()
 
+const goToProjectPage = (id: string): void => {
+  router.push({ path: `/projects/${id}` })
+}
+
 const deleteProject = (projectIndex: number): void => {
-  console.log(projectIndex)
-  if (projectStore.state.projectList) {
-    const projects = projectStore.state.projectList.filter((_, index) => index !== projectIndex)
-    projectStore.setProjectList(
-      projects,
-      'file -> components/project/project_list.vue; method -> deleteProject()'
-    )
+  if (projectStore.getProjectList) {
+    const projects = projectStore.getProjectList.filter((_, index) => index !== projectIndex)
+    projectStore.setProjectList(projects, 'file -> components/project/project_list.vue; method -> deleteProject()')
 
     $q.notify({
       color: 'positive',
@@ -35,22 +37,21 @@ const deleteProject = (projectIndex: number): void => {
         </tr>
       </thead>
       <tbody class="bg-grey-3">
-        <template
-          v-if="projectStore.state.projectList && projectStore.state.projectList.length > 0"
-        >
-          <tr v-for="(project, index) in projectStore.state.projectList" :key="index">
+        <template v-if="projectStore.getProjectList && projectStore.getProjectList.length > 0">
+          <tr
+            v-for="(project, index) in projectStore.getProjectList"
+            :key="index"
+            @click="goToProjectPage(project.id)"
+            class="cursor-pointer"
+          >
             <td class="text-left">{{ project.name }}</td>
             <td class="text-right">{{ project.feedFrames.length }}</td>
             <td class="text-right">{{ project.createdAt }}</td>
             <td class="text-right">
-              <q-btn round color="primary" icon="edit" class="q-ma-sm" />
-              <q-btn
-                round
-                color="negative"
-                icon="delete"
-                class="q-ma-sm"
-                @click="deleteProject(index)"
-              />
+              <div class="row column items-end">
+                <q-btn rounded color="positive" label="Edit Frame" class="q-ma-sm" @click="goToProjectPage(project.id)" />
+                <q-btn rounded outline color="negative" class="q-ma-sm" label="Delete Frame" @click.stop="deleteProject(index)" />
+              </div>
             </td>
           </tr>
         </template>

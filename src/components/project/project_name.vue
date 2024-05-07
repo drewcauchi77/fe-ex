@@ -11,10 +11,27 @@ const router = useRouter()
 const emit = defineEmits(['goToNextStep'])
 const projectName = ref<string>('')
 
-const shouldDisableButtons = computed(() => projectStore.state.project.name !== null || projectName.value === '')
+const shouldDisableButtons = computed(() => projectStore.getCurrentProjectName !== null || projectName.value === '')
 
 const startProject = (): void => {
-  projectStore.createProject(projectName.value, 'file -> components/project/project_name.vue; method -> startProject()')
+  if (projectStore.getProjectList) {
+    const projectId: string = crypto.randomUUID()
+
+    projectStore.setProjectList(
+      [
+        {
+          id: projectId,
+          name: projectName.value,
+          createdAt: new Date().toLocaleString(),
+          feedFrames: []
+        },
+        ...projectStore.getProjectList
+      ],
+      'file -> components/project/project_name.vue; method -> startProject()'
+    )
+
+    projectStore.setCurrentProjectID(projectId, 'file -> components/project/project_name.vue; method -> startProject()')
+  }
 
   $q.notify({
     color: 'positive',
@@ -36,7 +53,7 @@ const startProject = (): void => {
         outlined
         label-slot
         class="col-grow bg-white rounded-borders text-sm q-mb-lg"
-        :readonly="projectStore.state.project.name !== null"
+        :readonly="projectStore.getCurrentProjectName !== null"
       >
         <template v-slot:label>
           <span class="text-weight-medium"

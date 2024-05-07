@@ -36,12 +36,13 @@ const captureFeedFrame = (): void => {
     canvas.getContext('2d')?.drawImage(feed.value, 0, 0)
 
     const imageUrl: string = canvas.toDataURL()
-    projectStore.setCreatedProjectFrames(
+    projectStore.setFeedFramesTaken(
       [
-        ...projectStore.state.project.feedFrames,
+        ...projectStore.getFeedFramesTaken,
         {
           image: imageUrl,
-          createdAt: new Date().toLocaleString()
+          createdAt: new Date().toLocaleString(),
+          tags: []
         }
       ],
       'file -> components/feed/feed.vue, method -> captureFeedFrame()'
@@ -79,7 +80,7 @@ const stopFeed = (): void => {
         class="play-button absolute-center"
         @click="startFeed()"
         v-if="feedStatus === 'stopped'"
-        :disable="!projectStore.state.project.name"
+        :disable="!projectStore.getCurrentProjectName"
       />
       <q-spinner-ios v-else-if="feedStatus === 'loading'" color="primary" class="loading absolute-center" />
     </div>

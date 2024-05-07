@@ -1,15 +1,28 @@
-import { reactive } from 'vue'
+import { reactive, computed } from 'vue'
 import { defineStore } from 'pinia'
 import type { FeedFrame, Project, ProjectStore } from '@/definitions/interfaces'
 
 const useProjectStore = defineStore('project', () => {
   const state = reactive<ProjectStore>({
     projectList: null,
-    project: {
-      name: null,
-      createdAt: null,
-      feedFrames: []
+    currentProjectId: null,
+    feedFramesTaken: []
+  })
+
+  const getProjectList = computed(() => state.projectList ?? null)
+  const getCurrentProjectId = computed(() => state.currentProjectId ?? null)
+  const getFeedFramesTaken = computed(() => state.feedFramesTaken ?? [])
+
+  const getCurrentProject = computed(() =>
+    state.projectList ? state.projectList.find((project) => project.id === state.currentProjectId) : null
+  )
+  const getCurrentProjectName = computed(() => {
+    if (state.currentProjectId && state.projectList) {
+      const foundProject = state.projectList.find((project) => project.id === state.currentProjectId)
+      return foundProject ? foundProject.name : null
     }
+
+    return null
   })
 
   const setProjectList = (newValue: Project[], from: string): void => {
@@ -18,32 +31,25 @@ const useProjectStore = defineStore('project', () => {
     localStorage.setItem('projectList', JSON.stringify(state.projectList))
   }
 
-  const createProject = (newValue: string, from: string): void => {
-    console.log(`%c createProject triggered from ${from}`, 'color: green')
-    state.project.name = newValue
-    state.project.createdAt = new Date().toLocaleString()
+  const setCurrentProjectID = (newValue: string | null, from: string): void => {
+    console.log(`%c setCurrentProjectID triggered from ${from}`, 'color: green')
+    state.currentProjectId = newValue
   }
 
-  const resetCreatedProject = (from: string): void => {
-    console.log(`%c resetCreatedProject triggered from ${from}`, 'color: green')
-    state.project = Object.assign({}, state.project, {
-      name: null,
-      createdAt: null,
-      feedFrames: []
-    })
-  }
-
-  const setCreatedProjectFrames = (newValue: FeedFrame[], from: string): void => {
-    console.log(`%c setCreatedProjectFrames triggered from ${from}`, 'color: green')
-    state.project.feedFrames = newValue
+  const setFeedFramesTaken = (newValue: FeedFrame[], from: string): void => {
+    console.log(`%c setFeedFramesTaken triggered from ${from}`, 'color: green')
+    state.feedFramesTaken = newValue
   }
 
   return {
-    state,
+    getProjectList,
+    getCurrentProjectId,
+    getFeedFramesTaken,
+    getCurrentProject,
+    getCurrentProjectName,
     setProjectList,
-    createProject,
-    resetCreatedProject,
-    setCreatedProjectFrames
+    setCurrentProjectID,
+    setFeedFramesTaken
   }
 })
 

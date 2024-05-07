@@ -1,15 +1,18 @@
 export interface FeedFrame {
   image: string
   createdAt: string
+  tags: string[]
 }
 
 export interface Project {
-  name: string | null
-  createdAt: string | null
+  id: string
+  name: string
+  createdAt: string
   feedFrames: FeedFrame[]
 }
 
 export interface ProjectStore {
   projectList: Project[] | null
-  project: Project
+  currentProjectId: string | null
+  feedFramesTaken: FeedFrame[]
 }
