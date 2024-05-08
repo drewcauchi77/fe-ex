@@ -1,7 +1,7 @@
-import { ref, reactive, computed } from 'vue'
+import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
 import type { Ref } from 'vue'
-import type { FeedFrame, Project, ProjectStore } from '@/definitions/interfaces'
+import type { FeedFrame, Project } from '@/definitions/interfaces'
 
 const useProjectStore = defineStore('project', () => {
   const projectList: Ref<Project[] | null> = ref(null)

@@ -2,7 +2,7 @@
 import { defineAsyncComponent } from 'vue'
 import { useRoute } from 'vue-router'
 import { useProjectStore } from '@/stores/project'
-import Breadcrumb from '@/components/shared/breadcrumb.vue'
+import PageBreadcrumb from '@/components/shared/page_breadcrumb.vue'
 
 const FeedFrames = defineAsyncComponent(() => import('@/components/feed/feed_frames.vue'))
 const ErrorView = defineAsyncComponent(() => import('@/views/error_view.vue'))
@@ -15,7 +15,7 @@ const projectById = projectStore.getProjectById(route.params.id as string)
 <template>
   <section>
     <template v-if="projectById">
-      <breadcrumb />
+      <page-breadcrumb />
       <div class="q-pt-lg q-px-lg">
         <h1 class="text-h6 text-black q-mx-none q-mt-none q-mb-lg">Project: {{ projectById.name }}</h1>
         <p class="q-mb-lg">

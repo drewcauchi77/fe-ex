@@ -1,6 +1,6 @@
 <!-- !!! Final !!! -->
 <script setup lang="ts">
-import { ref, defineEmits, computed } from 'vue'
+import { ref, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { QInput, QBtn, useQuasar } from 'quasar'
 import { useProjectStore } from '@/stores/project'

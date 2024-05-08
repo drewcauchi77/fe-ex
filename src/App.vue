@@ -4,7 +4,7 @@ import { onMounted } from 'vue'
 import { RouterView } from 'vue-router'
 import { QLayout, QPageContainer, useQuasar } from 'quasar'
 import { useProjectStore } from './stores/project'
-import Navigation from './components/shared/navigation.vue'
+import SiteNavigation from './components/shared/site_navigation.vue'
 import type { Project } from './definitions/interfaces'
 
 const $q = useQuasar()
@@ -31,7 +31,7 @@ onMounted(() => {
   <q-layout class="bg-white" v-if="projectStore.projectList">
     <q-page-container class="container q-my-none q-mx-auto">
       <main class="q-pa-md">
-        <navigation />
+        <site-navigation />
         <router-view />
       </main>
     </q-page-container>

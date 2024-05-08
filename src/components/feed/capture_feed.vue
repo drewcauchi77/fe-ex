@@ -50,7 +50,7 @@ const captureFeedFrame = (): void => {
           tags: []
         }
       ],
-      'file -> components/feed/feed.vue, method -> captureFeedFrame()'
+      'file -> components/feed/capture_feed.vue, method -> captureFeedFrame()'
     )
 
     $q.notify({

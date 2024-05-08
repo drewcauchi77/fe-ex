@@ -1,6 +1,6 @@
 <!-- !!! Final !!! -->
 <script setup lang="ts">
-import Breadcrumb from '@/components/shared/breadcrumb.vue'
+import PageBreadcrumb from '@/components/shared/page_breadcrumb.vue'
 
 const props = defineProps<{
   message?: string
@@ -12,7 +12,7 @@ const props = defineProps<{
     <img src="/images/404.png" class="q-my-0 q-mx-auto block" />
     <div class="q-pt-lg">
       <span class="text-center q-pb-sm block" v-if="props.message">{{ props.message }}</span>
-      <breadcrumb class="q-pa-non text-center" />
+      <page-breadcrumb class="q-pa-non text-center" />
     </div>
   </section>
 </template>

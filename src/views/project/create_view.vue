@@ -6,9 +6,9 @@ import { useProjectStore } from '@/stores/project'
 import type { Ref } from 'vue'
 import type { RouteLocationNormalizedLoaded, RouteLocationNormalized } from 'vue-router'
 
-import Breadcrumb from '@/components/shared/breadcrumb.vue'
+import PageBreadcrumb from '@/components/shared/page_breadcrumb.vue'
 import ProjectName from '@/components/project/project_name.vue'
-const Feed = defineAsyncComponent(() => import('@/components/feed/feed.vue'))
+const CaptureFeed = defineAsyncComponent(() => import('@/components/feed/capture_feed.vue'))
 
 const projectStore = useProjectStore()
 
@@ -37,9 +37,9 @@ onBeforeRouteLeave((to: RouteLocationNormalized, from: RouteLocationNormalizedLo
 
 <template>
   <section>
-    <breadcrumb />
+    <page-breadcrumb />
     <project-name v-if="currentStep >= 1" @goToNextStep="currentStep += 1" />
-    <feed v-if="currentStep >= 2" />
+    <capture-feed v-if="currentStep >= 2" />
   </section>
 </template>
 
