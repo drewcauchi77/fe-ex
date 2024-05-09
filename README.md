@@ -29,7 +29,7 @@ This project allows the end-user to create a project and connect the video camer
 - `/src`: All the logic of our application is here
 - `/src/assets`: Styling for the application together with Quasar configuration is placed here
 - `/src/components`: All the components are in Vue3, split in different folders according for re-usability - most of the logic is here
-- `/src/components/__tests__`: Cypress component tests are located here
+- `/src/components/__tests__`: Cypress component/unit tests are located here
 - `/src/definitions`: All the interfaces we require to strongly type our projects (usually also a types.ts file is included)
 - `/src/router`: All the routes created through Vue Router for our project, each path is a view located in `/src/views`
 - `/src/stores`: Our Pinia stores, we only need project store for our current application
