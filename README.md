@@ -38,16 +38,36 @@ This project allows the end-user to create a project and connect the video camer
 - `/src/main.ts`: Responsible to setup all our plugins and to initialise the root component
 - `/index.html`: Our application entry point
 
-## Features and Functionality
+## Run Project
 
-To Do
+Run the following command to start the project in development mode:
 
-## Testing
+```sh
+npm run dev
+```
 
-Run the following command to execute tests:
+## E2E Testing
+
+Run the following command to execute E2E tests through Cypress:
 
 ```sh
 npm run test:e2e:dev
+```
+
+## Unit Testing
+
+Run the following command to execute E2E tests through Cypress:
+
+```sh
+npm run test:unit:dev
+```
+
+## Code Linting
+
+Run the following command to ensure no easily-caught errors exist:
+
+```sh
+npm run lint
 ```
 
 ## Deployment
