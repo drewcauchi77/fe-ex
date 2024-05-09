@@ -7,12 +7,14 @@ import type { Ref } from 'vue'
 const projectStore = useProjectStore()
 
 const tag: Ref<string> = ref('')
+// Frames for the current project are saved in the store and we need to know which index to push the tags there - passed as props
 const props = defineProps<{
   frameIndex: number | null
 }>()
 
 const saveTag = (): void => {
   if (!!tag.value?.trim() && props.frameIndex !== null) {
+    // Saving of the tag in the store by the frameIndex
     const frames = [...projectStore.feedFrames]
     frames[props.frameIndex].tags.push(tag.value)
     projectStore.setFeedFramesTaken(frames, 'file -> components/frame/frame_tags.vue; method -> saveTag()')
@@ -22,6 +24,7 @@ const saveTag = (): void => {
 
 const removeTag = (tagIndex: number): void => {
   if (props.frameIndex !== null) {
+    // Removing the index of the tag and setting in store
     const frames = projectStore.feedFrames.map((object) => ({ ...object }))
     frames[props.frameIndex].tags = [
       ...frames[props.frameIndex].tags.slice(0, tagIndex),

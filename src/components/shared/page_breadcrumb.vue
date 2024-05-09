@@ -1,10 +1,10 @@
-<!-- !!! Final !!! -->
 <script setup lang="ts">
 import { RouterLink, useRouter } from 'vue-router'
 import type { Router, RouteLocationNormalizedLoaded } from 'vue-router'
 
 const router: Router = useRouter()
 
+// Gets us the route the user visited last, if it doesn't exist - we go to the Dashboard, we also need to get the meta title by resolving the back route
 const backRoute: string = (router.options.history.state.back as string) ?? '/'
 const getBackRouteTitle: RouteLocationNormalizedLoaded | undefined = router.resolve(backRoute)
 </script>

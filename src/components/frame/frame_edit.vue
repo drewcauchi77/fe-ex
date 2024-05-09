@@ -19,7 +19,7 @@ const props = defineProps<{
     <q-separator />
 
     <q-card-section class="q-pt-none">
-      <img :src="projectStore.feedFrames[props.frameIndex].image" class="q-mb-lg" />
+      <img :src="projectStore.feedFrames[props.frameIndex].image" class="q-mb-lg full-width" />
       <p class="q-mb-lg">
         Created at <strong>{{ projectStore.feedFrames[props.frameIndex].createdAt }}</strong>
       </p>
@@ -34,8 +34,4 @@ const props = defineProps<{
   </q-card>
 </template>
 
-<style scoped lang="scss">
-img {
-  width: 100%;
-}
-</style>
+<style scoped lang="scss"></style>

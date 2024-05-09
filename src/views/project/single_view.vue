@@ -9,6 +9,7 @@ const ErrorView = defineAsyncComponent(() => import('@/views/error_view.vue'))
 
 const route = useRoute()
 const projectStore = useProjectStore()
+// Through the ID in the route, we need to look in our projects list to ensure that we get the proper project details
 const projectById = projectStore.getProjectById(route.params.id as string)
 </script>
 

@@ -7,12 +7,14 @@ const router = useRouter()
 const $q = useQuasar()
 const projectStore = useProjectStore()
 
+// Since this router push is used in 2 places, a function was created
 const goToProjectPage = (id: string): void => {
   router.push({ path: `/projects/${id}` })
 }
 
 const deleteProject = (projectIndex: number): void => {
   if (projectStore.projectList) {
+    // Removal of project by the project ID
     const projects = projectStore.projectList.filter((_, index) => index !== projectIndex)
     projectStore.setProjectList(projects, 'file -> components/project/project_list.vue; method -> deleteProject()')
 

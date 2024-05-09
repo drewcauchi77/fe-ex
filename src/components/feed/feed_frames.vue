@@ -1,4 +1,3 @@
-<!-- !!! Final !!! -->
 <script setup lang="ts">
 import { ref, defineAsyncComponent } from 'vue'
 import { useRouter } from 'vue-router'
@@ -23,12 +22,15 @@ const props = defineProps<{
 
 const setFrameDialog = (reset: boolean, frameIndex?: number): void => {
   if (props.canFramesBeEdited) {
+    // This component is used both in project creation and previous project pages
+    // This is the handler to open the quasar dialog box - operating with a v-model
     frameIndexToOpen.value = reset ? null : frameIndex ?? null
     openDialog.value = reset ? false : true
   }
 }
 
 const removeFrame = (frameIndex: number): void => {
+  // We remove the frame and set it in the store
   const frames = projectStore.feedFrames.filter((_, index) => index !== frameIndex)
   projectStore.setFeedFramesTaken(frames, 'file -> components/feed/feed_frames.vue; method -> removeFrame()')
 
@@ -40,6 +42,7 @@ const removeFrame = (frameIndex: number): void => {
 }
 
 const saveProject = (): void => {
+  // A project is created on name insertion - user should press the Save Project button to ensure that the captured frames are saved for future use
   if (projectStore.projectList && projectStore.currentProjectId) {
     const projectToUpdate: Project | undefined = projectStore.projectList.find((project) => project.id === projectStore.currentProjectId)
     if (projectToUpdate) {
@@ -60,6 +63,7 @@ const saveProject = (): void => {
     })
   }
 
+  // Routing back to projects page and resetting the store values
   router.push({ name: 'Projects' })
   projectStore.setFeedFramesTaken([], 'file -> components/feed/feed_frames.vue; method -> saveProject()')
   projectStore.setCurrentProjectID(null, 'file -> components/feed/feed_frames.vue; method -> saveProject()')
