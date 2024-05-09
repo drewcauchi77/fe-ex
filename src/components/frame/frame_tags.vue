@@ -15,9 +15,9 @@ const props = defineProps<{
 const saveTag = (): void => {
   if (!!tag.value?.trim() && props.frameIndex !== null) {
     // Saving of the tag in the store by the frameIndex
-    const frames = [...projectStore.feedFrames]
+    const frames = JSON.parse(JSON.stringify(projectStore.feedFrames))
     frames[props.frameIndex].tags.push(tag.value)
-    projectStore.setFeedFramesTaken(frames, 'file -> components/frame/frame_tags.vue; method -> saveTag()')
+    projectStore.setFeedFramesTaken(JSON.parse(JSON.stringify(frames)), 'file -> components/frame/frame_tags.vue; method -> saveTag()')
     tag.value = ''
   }
 }
@@ -25,16 +25,12 @@ const saveTag = (): void => {
 const removeTag = (tagIndex: number): void => {
   if (props.frameIndex !== null) {
     // Removing the index of the tag and setting in store
-    const frames = projectStore.feedFrames.map((object) => ({ ...object }))
+    const frames = JSON.parse(JSON.stringify(projectStore.feedFrames))
     frames[props.frameIndex].tags = [
       ...frames[props.frameIndex].tags.slice(0, tagIndex),
       ...frames[props.frameIndex].tags.slice(tagIndex + 1)
     ]
-
-    projectStore.setFeedFramesTaken(
-      frames.map((frame) => ({ ...frame })),
-      'file -> components/frame/frame_tags.vue; method -> removeTag()'
-    )
+    projectStore.setFeedFramesTaken(JSON.parse(JSON.stringify(frames)), 'file -> components/frame/frame_tags.vue; method -> removeTag()')
   }
 }
 </script>

@@ -31,8 +31,8 @@ const setFrameDialog = (reset: boolean, frameIndex?: number): void => {
 
 const removeFrame = (frameIndex: number): void => {
   // We remove the frame and set it in the store
-  const frames = projectStore.feedFrames.filter((_, index) => index !== frameIndex)
-  projectStore.setFeedFramesTaken(frames, 'file -> components/feed/feed_frames.vue; method -> removeFrame()')
+  const frames = JSON.parse(JSON.stringify(projectStore.feedFrames.filter((_, index) => index !== frameIndex)))
+  projectStore.setFeedFramesTaken(JSON.parse(JSON.stringify(frames)), 'file -> components/feed/feed_frames.vue; method -> removeFrame()')
 
   $q.notify({
     color: 'info',
@@ -44,17 +44,24 @@ const removeFrame = (frameIndex: number): void => {
 const saveProject = (): void => {
   // A project is created on name insertion - user should press the Save Project button to ensure that the captured frames are saved for future use
   if (projectStore.projectList && projectStore.currentProjectId) {
-    const projectToUpdate: Project | undefined = projectStore.projectList.find((project) => project.id === projectStore.currentProjectId)
+    const projects: Project[] = JSON.parse(JSON.stringify(projectStore.projectList))
+    const projectToUpdate: Project | undefined = projects.find((project) => project.id === projectStore.currentProjectId)
     if (projectToUpdate) {
       projectToUpdate.feedFrames = projectStore.feedFrames
-      projectStore.setProjectList([...projectStore.projectList], 'file -> components/feed/feed_frames.vue; method -> saveProject()')
-    }
+      projectStore.setProjectList(JSON.parse(JSON.stringify(projects)), 'file -> components/feed/feed_frames.vue; method -> saveProject()')
 
-    $q.notify({
-      color: 'positive',
-      message: 'Project has been saved successfully!',
-      position: 'top'
-    })
+      $q.notify({
+        color: 'positive',
+        message: 'Project has been saved successfully!',
+        position: 'top'
+      })
+    } else {
+      $q.notify({
+        color: 'negative',
+        message: 'There was an issue saving your project!',
+        position: 'top'
+      })
+    }
   } else {
     $q.notify({
       color: 'negative',

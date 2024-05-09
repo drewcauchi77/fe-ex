@@ -18,7 +18,7 @@ onMounted(() => {
     try {
       const LS_projectListJSON: string | null = localStorage.getItem('projectList')
       const LS_projectList: Project[] = LS_projectListJSON ? JSON.parse(LS_projectListJSON) : []
-      projectStore.setProjectList(LS_projectList, 'file -> App.vue; method -> onMounted()')
+      projectStore.setProjectList([...LS_projectList], 'file -> App.vue; method -> onMounted()')
     } catch (error) {
       console.error('There was an error retrieving and parsing the project list!', error)
       $q.notify({

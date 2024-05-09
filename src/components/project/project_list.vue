@@ -12,11 +12,11 @@ const goToProjectPage = (id: string): void => {
   router.push({ path: `/projects/${id}` })
 }
 
-const deleteProject = (projectIndex: number): void => {
+const deleteProject = (projectIndex: string): void => {
   if (projectStore.projectList) {
     // Removal of project by the project ID
-    const projects = projectStore.projectList.filter((_, index) => index !== projectIndex)
-    projectStore.setProjectList(projects, 'file -> components/project/project_list.vue; method -> deleteProject()')
+    const projects = projectStore.projectList.filter((project) => projectIndex !== project.id)
+    projectStore.setProjectList([...projects], 'file -> components/project/project_list.vue; method -> deleteProject()')
 
     $q.notify({
       color: 'positive',
@@ -58,7 +58,7 @@ const deleteProject = (projectIndex: number): void => {
                   color="negative"
                   class="delete-project q-ma-sm"
                   label="Delete Project"
-                  @click.stop="deleteProject(index)"
+                  @click.stop="deleteProject(project.id)"
                 />
               </div>
             </td>
