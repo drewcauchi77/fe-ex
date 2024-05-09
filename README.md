@@ -1,46 +1,45 @@
 ## Project Overview
 
-This project allows the end-user to create a project and connect the video camera. Whilst the feed is running, specific frames can be taken. The feed can then be stopped and the frames taken can be analysed, deleting the ones that are deemed useless or mistakenly taken. The user can also created 1 or more tags to each frame. The user can also go back to previous projects, open and delete them.
+This project enables end-users to create a project and connect a video camera. While the video feed is active, specific frames can be captured for later analysis. Users can stop the feed, review the captured frames, and delete any that are unnecessary or taken in error. Additionally, users can tag frames and manage previous projects, including the ability to open and delete them.
 
 ## Technologies/Dependencies Used
 
-- Vue3
-- Vue Router
-- Typescript
-- Pinia for our state management system
-- Cypress for e2e testing
-- Quasar for component building and styling
-- Prettier for code formatting
-- EsLint for error discovery
-- Vite for project building tooling
+- Vue3: Core framework
+- Vue Router: Routing management
+- TypeScript: Programming language
+- Pinia: State management system
+- Cypress: End-to-end and unit testing
+- Quasar: Component building and styling
+- Prettier: Code formatting
+- ESLint: Error checking
+- Vite: Build tooling
 
 ## Setup and Installation
 
-1. Extract the zip file provided
-2. Navigate to the extracted folder, now the project directory
-3. Run `npm install` to install all the related dependencies of the project
-4. Server the application by running `npm run dev`
-5. This will run the application locally
+1. Unzip the provided file.
+2. Change directory to the project folder.
+3. Execute `npm install` to install dependencies.
+4. Start the application locally by running `npm run dev`.
 
 ## Project Structure
 
-- `/cypress`: Contains all the e2e testing to simulate a running project from start to finish mainly project creation and previous project handling
-- `/public`: Includes all the assets that we need for the project like images, icons and fonts
-- `/src`: All the logic of our application is here
-- `/src/assets`: Styling for the application together with Quasar configuration is placed here
-- `/src/components`: All the components are in Vue3, split in different folders according for re-usability - most of the logic is here
-- `/src/components/__tests__`: Cypress component/unit tests are located here
-- `/src/definitions`: All the interfaces we require to strongly type our projects (usually also a types.ts file is included)
-- `/src/router`: All the routes created through Vue Router for our project, each path is a view located in `/src/views`
-- `/src/stores`: Our Pinia stores, we only need project store for our current application
-- `/src/views`: All the pages called as routes - components are imported on the pages as needed and minimal logic is included here
-- `/src/App.vue`: Holds the template of our views - the root of our application
-- `/src/main.ts`: Responsible to setup all our plugins and to initialise the root component
-- `/index.html`: Our application entry point
+- `/cypress`: Includes end-to-end tests and settings for unit tests.
+- `/public`: Stores assets such as images, icons, and fonts.
+- `/src`: Contains all application logic.
+  - `/src/assets`: Includes styling and Quasar configurations.
+  - `/src/components`: Vue3 components organised by reusability.
+  - `/src/components/__tests__`: Cypress component and unit tests.
+  - `/src/definitions`: Type definitions and interfaces for strong typing.
+  - `/src/router`: Manages routes created with Vue Router.
+  - `/src/stores`: Contains Pinia stores, with a primary focus on the project store.
+  - `/src/views`: Represents pages accessed via routes; minimal logic is present.
+  - `/src/App.vue`: The application's root template.
+  - `/src/main.ts`: Initialises plugins and the root component.
+- `/index.html`: Entry point of the application.
 
 ## Run Project
 
-Run the following command to start the project in development mode:
+To launch the project in development mode, run:
 
 ```sh
 npm run dev
@@ -48,7 +47,7 @@ npm run dev
 
 ## E2E Testing
 
-Run the following command to execute E2E tests through Cypress:
+To execute end-to-end tests via Cypress, use:
 
 ```sh
 npm run test:e2e:dev
@@ -56,7 +55,7 @@ npm run test:e2e:dev
 
 ## Unit Testing
 
-Run the following command to execute E2E tests through Cypress:
+To perform unit tests via Cypress, run:
 
 ```sh
 npm run test:unit:dev
@@ -64,7 +63,7 @@ npm run test:unit:dev
 
 ## Code Linting
 
-Run the following command to ensure no easily-caught errors exist:
+To detect and fix linting errors, execute:
 
 ```sh
 npm run lint
@@ -72,7 +71,7 @@ npm run lint
 
 ## Deployment
 
-To build the project for production:
+For production, build the project with:
 
 ```sh
 npm run build
@@ -82,4 +81,4 @@ Deploy the contents of the `/dist` folder to your server.
 
 ## Contact Information
 
-For help or questions about this project, contact Andrew Cauchi at [drewcauchi@gmail.com].
+For questions about this project, contact Andrew Cauchi at [drewcauchi@gmail.com].
