@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { useRouter } from 'vue-router'
-import { QMarkupTable, QBtn, useQuasar } from 'quasar'
+import { QMarkupTable } from 'quasar'
 import { useProjectStore } from '@/stores/project'
+import { fireNotification } from '@/helpers/helpers'
 
 const router = useRouter()
-const $q = useQuasar()
 const projectStore = useProjectStore()
 
 // Since this router push is used in 2 places, a function was created
@@ -17,12 +17,7 @@ const deleteProject = (projectIndex: string): void => {
     // Removal of project by the project ID
     const projects = projectStore.projectList.filter((project) => projectIndex !== project.id)
     projectStore.setProjectList([...projects], 'file -> components/project/project_list.vue; method -> deleteProject()')
-
-    $q.notify({
-      color: 'positive',
-      message: 'Project has been successfully deleted!',
-      position: 'top'
-    })
+    fireNotification('Project has been successfully deleted!', 'positive')
   }
 }
 </script>
@@ -51,8 +46,14 @@ const deleteProject = (projectIndex: string): void => {
             <td class="text-right">{{ project.createdAt }}</td>
             <td class="text-right">
               <div class="row column items-end">
-                <q-btn rounded color="positive" label="Open Project" class="open-project q-ma-sm" @click="goToProjectPage(project.id)" />
-                <q-btn
+                <custom-button
+                  rounded
+                  color="positive"
+                  label="Open Project"
+                  class="open-project q-ma-sm"
+                  @click="goToProjectPage(project.id)"
+                />
+                <custom-button
                   rounded
                   outline
                   color="negative"

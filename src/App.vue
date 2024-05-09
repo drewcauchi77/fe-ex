@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import { onMounted, inject } from 'vue'
 import { RouterView } from 'vue-router'
-import { QLayout, QPageContainer, useQuasar } from 'quasar'
+import { QLayout, QPageContainer } from 'quasar'
 import { useProjectStore } from './stores/project'
+import { fireNotification } from './helpers/helpers'
 import SiteNavigation from './components/shared/site_navigation.vue'
 import type { Project } from './definitions/interfaces'
 
-const $q = useQuasar()
 const projectStore = useProjectStore()
 const $useLocalStorage = inject('$useLocalStorage')
 
@@ -20,12 +20,8 @@ onMounted(() => {
       const LS_projectList: Project[] = LS_projectListJSON ? JSON.parse(LS_projectListJSON) : []
       projectStore.setProjectList([...LS_projectList], 'file -> App.vue; method -> onMounted()')
     } catch (error) {
-      console.error('There was an error retrieving and parsing the project list!', error)
-      $q.notify({
-        color: 'negative',
-        message: 'There was an error retrieving and parsing the project list!',
-        position: 'top'
-      })
+      console.error('There was an error retrieving or parsing the project list!', error)
+      fireNotification('There was an error retrieving or parsing the project list!', 'negative')
     }
   } else {
     localStorage.removeItem('projectList')

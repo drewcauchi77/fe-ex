@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { QBtn, QCard, QSeparator, QCardSection, QCardActions } from 'quasar'
+import { QCard, QSeparator, QCardSection, QCardActions } from 'quasar'
 import { useProjectStore } from '@/stores/project'
 import FrameTags from './frame_tags.vue'
 
@@ -29,7 +29,7 @@ const props = defineProps<{
     <q-separator />
 
     <q-card-actions align="right">
-      <q-btn class="q-ml-md q-mb-sm" rounded outline color="negative" label="Dismiss" v-close-popup />
+      <custom-button class="q-ml-md q-mb-sm" rounded outline color="negative" label="Dismiss" v-close-popup />
     </q-card-actions>
   </q-card>
 </template>

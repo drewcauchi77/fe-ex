@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
 import { useRouter } from 'vue-router'
-import { QInput, QBtn, useQuasar } from 'quasar'
+import { QInput } from 'quasar'
 import { useProjectStore } from '@/stores/project'
+import { fireNotification } from '@/helpers/helpers'
 import type { Ref } from 'vue'
 import type { Router } from 'vue-router'
 
-const $q = useQuasar()
 const projectStore = useProjectStore()
 const router: Router = useRouter()
 
@@ -40,12 +40,7 @@ const handleProjectCreation = (): void => {
     projectStore.setCurrentProjectID(projectId, 'file -> components/project/project_name.vue; method -> handleProjectCreation()')
   }
 
-  $q.notify({
-    color: 'positive',
-    message: 'Project has been created!',
-    position: 'top'
-  })
-
+  fireNotification('Project has been created successfully!', 'positive')
   emit('goToNextStep')
 }
 </script>
@@ -54,7 +49,7 @@ const handleProjectCreation = (): void => {
   <section class="shadow-2 bg-dark q-pa-lg rounded-borders">
     <h1 class="text-h6 text-black q-mx-none q-mt-none q-mb-lg">Create Project</h1>
 
-    <div class="input-fields">
+    <form class="input-fields" @submit.prevent="handleProjectCreation()">
       <q-input
         v-model="projectName"
         outlined
@@ -72,7 +67,7 @@ const handleProjectCreation = (): void => {
       </q-input>
 
       <div class="row justify-end">
-        <q-btn
+        <custom-button
           class="q-ml-md q-mb-sm"
           rounded
           outline
@@ -81,16 +76,17 @@ const handleProjectCreation = (): void => {
           @click="router.push({ name: 'Projects' })"
           :disable="shouldDisableButtons"
         />
-        <q-btn
+        <custom-button
           class="create-project q-ml-md q-mb-sm"
           rounded
           color="primary"
           label="Create"
+          type="submit"
           @click="handleProjectCreation()"
           :disable="shouldDisableButtons"
         />
       </div>
-    </div>
+    </form>
   </section>
 </template>
 

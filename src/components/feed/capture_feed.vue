@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
-import { QBtn, QSpinnerIos, useQuasar } from 'quasar'
+import { QSpinnerIos } from 'quasar'
 import { useProjectStore } from '@/stores/project'
+import { fireNotification } from '@/helpers/helpers'
 import type { Ref } from 'vue'
 import FeedFrames from './feed_frames.vue'
 
-const $q = useQuasar()
 const projectStore = useProjectStore()
 
 const feed: Ref<HTMLVideoElement | null> = ref(null)
@@ -27,11 +27,7 @@ const startFeed = async (): Promise<void> => {
     feedStatus.value = 'started'
   } catch (error) {
     console.error('There has been an error connecting or starting the feed!', error)
-    $q.notify({
-      color: 'negative',
-      message: 'There has been an error connecting or starting the feed!',
-      position: 'top'
-    })
+    fireNotification('There has been an error connecting or starting the feed!', 'negative')
   }
 }
 
@@ -56,11 +52,7 @@ const captureFeedFrame = (): void => {
       'file -> components/feed/capture_feed.vue, method -> captureFeedFrame()'
     )
 
-    $q.notify({
-      color: 'positive',
-      message: 'Frame has been captured from feed!',
-      position: 'top'
-    })
+    fireNotification('Frame has been captured from feed!', 'positive')
   }
 }
 
@@ -84,7 +76,7 @@ const stopFeed = (): void => {
     <h1 class="text-h6 text-black q-mx-none q-mt-none q-mb-lg">Connect Feed</h1>
     <div class="bg-black relative-position rounded-borders">
       <video ref="feed" autoplay class="video-container q-mt-none q-mx-auto block full-width"></video>
-      <q-btn
+      <custom-button
         round
         color="primary"
         icon="play_arrow"
@@ -96,7 +88,7 @@ const stopFeed = (): void => {
       <q-spinner-ios v-else-if="feedStatus === 'loading'" color="primary" class="loading absolute-center" />
     </div>
     <div class="row q-pt-md justify-end">
-      <q-btn
+      <custom-button
         class="stop-feed q-ml-md q-mb-sm"
         rounded
         color="positive"
@@ -104,7 +96,7 @@ const stopFeed = (): void => {
         @click="stopFeed()"
         :disable="!hasFeedStarted"
       />
-      <q-btn
+      <custom-button
         class="capture-frame q-ml-md q-mb-sm"
         rounded
         color="primary"

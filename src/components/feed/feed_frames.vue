@@ -1,14 +1,14 @@
 <script setup lang="ts">
 import { ref, defineAsyncComponent } from 'vue'
 import { useRouter } from 'vue-router'
-import { QMarkupTable, QBtn, QDialog, QBadge, useQuasar } from 'quasar'
+import { QMarkupTable, QDialog, QBadge } from 'quasar'
 import { useProjectStore } from '@/stores/project'
+import { fireNotification } from '@/helpers/helpers'
 import type { Ref } from 'vue'
 import type { FeedFrame, Project } from '@/definitions/interfaces'
 
 const FrameEdit = defineAsyncComponent(() => import('@/components/frame/frame_edit.vue'))
 
-const $q = useQuasar()
 const router = useRouter()
 const projectStore = useProjectStore()
 
@@ -33,12 +33,7 @@ const removeFrame = (frameIndex: number): void => {
   // We remove the frame and set it in the store
   const frames = JSON.parse(JSON.stringify(projectStore.feedFrames.filter((_, index) => index !== frameIndex)))
   projectStore.setFeedFramesTaken(JSON.parse(JSON.stringify(frames)), 'file -> components/feed/feed_frames.vue; method -> removeFrame()')
-
-  $q.notify({
-    color: 'info',
-    message: 'Frame has been removed successfully!',
-    position: 'top'
-  })
+  fireNotification('Frame has been removed successfully!', 'info')
 }
 
 const saveProject = (): void => {
@@ -49,25 +44,12 @@ const saveProject = (): void => {
     if (projectToUpdate) {
       projectToUpdate.feedFrames = projectStore.feedFrames
       projectStore.setProjectList(JSON.parse(JSON.stringify(projects)), 'file -> components/feed/feed_frames.vue; method -> saveProject()')
-
-      $q.notify({
-        color: 'positive',
-        message: 'Project has been saved successfully!',
-        position: 'top'
-      })
+      fireNotification('Project has been saved successfully!', 'positive')
     } else {
-      $q.notify({
-        color: 'negative',
-        message: 'There was an issue saving your project!',
-        position: 'top'
-      })
+      fireNotification('There was an issue saving your project!', 'negative')
     }
   } else {
-    $q.notify({
-      color: 'negative',
-      message: 'Project could not be found - request aborted!',
-      position: 'top'
-    })
+    fireNotification('Project could not be found - request aborted!', 'negative')
   }
 
   // Routing back to projects page and resetting the store values
@@ -114,8 +96,14 @@ const saveProject = (): void => {
             <td class="text-right">{{ frame.createdAt }}</td>
             <td class="text-right" v-if="canFramesBeEdited">
               <div class="row column items-end">
-                <q-btn rounded color="positive" label="Edit Frame" class="edit-frame q-ma-sm" @click="setFrameDialog(false, index)" />
-                <q-btn
+                <custom-button
+                  rounded
+                  color="positive"
+                  label="Edit Frame"
+                  class="edit-frame q-ma-sm"
+                  @click="setFrameDialog(false, index)"
+                />
+                <custom-button
                   rounded
                   outline
                   color="negative"
@@ -135,7 +123,7 @@ const saveProject = (): void => {
     </q-markup-table>
 
     <div class="q-pt-md text-white text-center" v-if="canFramesBeEdited">
-      <q-btn color="primary" rounded label="Save Project" class="save-project q-mt-sm" @click="saveProject()" />
+      <custom-button color="primary" rounded label="Save Project" class="save-project q-mt-sm" @click="saveProject()" />
     </div>
 
     <q-dialog v-model="openDialog" @beforeHide="setFrameDialog(true)" v-if="canFramesBeEdited">

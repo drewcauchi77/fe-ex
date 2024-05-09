@@ -1,6 +1,6 @@
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
-import { Quasar, Notify } from 'quasar'
+import { Quasar, Notify, QBtn } from 'quasar'
 
 import App from './App.vue'
 import router from './router'
@@ -26,5 +26,6 @@ app.use(Quasar, {
     Notify
   }
 })
+app.component('CustomButton', QBtn)
 
 app.mount('#app')

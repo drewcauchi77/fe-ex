@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { QInput, QBadge, QBtn } from 'quasar'
+import { QInput, QBadge } from 'quasar'
 import { useProjectStore } from '@/stores/project'
 import type { Ref } from 'vue'
 
@@ -48,7 +48,13 @@ const removeTag = (tagIndex: number): void => {
         class="badge q-mr-sm q-mb-sm q-pl-sm q-py-none q-pr-none"
       >
         <span>{{ tag }}</span>
-        <q-btn class="remove-tag q-my-none q-mr-none q-ml-sm q-pa-none" rounded color="primary" icon="close" @click="removeTag(index)" />
+        <custom-button
+          class="remove-tag q-my-none q-mr-none q-ml-sm q-pa-none"
+          rounded
+          color="primary"
+          icon="close"
+          @click="removeTag(index)"
+        />
       </q-badge>
     </div>
   </section>
