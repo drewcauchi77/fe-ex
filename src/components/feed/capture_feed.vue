@@ -91,8 +91,22 @@ const stopFeed = (): void => {
       <q-spinner-ios v-else-if="feedStatus === 'loading'" color="primary" class="loading absolute-center" />
     </div>
     <div class="row q-pt-md justify-end">
-      <q-btn class="q-ml-md q-mb-sm" rounded color="positive" label="Stop Feed & Review" @click="stopFeed()" :disable="!hasFeedStarted" />
-      <q-btn class="q-ml-md q-mb-sm" rounded color="primary" label="Capture Frame" @click="captureFeedFrame()" :disable="!hasFeedStarted" />
+      <q-btn
+        class="stop-feed q-ml-md q-mb-sm"
+        rounded
+        color="positive"
+        label="Stop Feed & Review"
+        @click="stopFeed()"
+        :disable="!hasFeedStarted"
+      />
+      <q-btn
+        class="capture-frame q-ml-md q-mb-sm"
+        rounded
+        color="primary"
+        label="Capture Frame"
+        @click="captureFeedFrame()"
+        :disable="!hasFeedStarted"
+      />
     </div>
   </section>
   <feed-frames v-if="showCapturedFrames" id="feed-frames" :frames="projectStore.feedFrames" :canFramesBeEdited="true" />

@@ -38,7 +38,7 @@ const removeTag = (tagIndex: number): void => {
 
 <template>
   <section class="q-mt-lg">
-    <q-input outlined v-model="tag" @keydown.enter="saveTag()" label="Add tags" />
+    <q-input outlined v-model="tag" @keydown.enter="saveTag()" label="Add tags" name="frameTags" />
     <div class="q-mt-md" v-if="props.frameIndex !== null">
       <q-badge
         rounded

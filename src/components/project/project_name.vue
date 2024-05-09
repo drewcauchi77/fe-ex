@@ -59,6 +59,7 @@ const handleProjectCreation = (): void => {
         outlined
         label-slot
         class="col-grow bg-white rounded-borders text-sm q-mb-lg"
+        name="projectName"
         :readonly="projectStore.getCurrentProjectName !== null"
       >
         <template v-slot:label>
@@ -80,7 +81,7 @@ const handleProjectCreation = (): void => {
           :disable="shouldDisableButtons"
         />
         <q-btn
-          class="q-ml-md q-mb-sm"
+          class="create-project q-ml-md q-mb-sm"
           rounded
           color="primary"
           label="Create"

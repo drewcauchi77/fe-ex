@@ -38,14 +38,26 @@ const deleteProject = (projectIndex: number): void => {
       </thead>
       <tbody class="bg-grey-3">
         <template v-if="projectStore.projectList && projectStore.projectList.length > 0">
-          <tr v-for="(project, index) in projectStore.projectList" :key="index" @click="goToProjectPage(project.id)" class="cursor-pointer">
+          <tr
+            v-for="(project, index) in projectStore.projectList"
+            :key="index"
+            @click="goToProjectPage(project.id)"
+            class="cursor-pointer project-row"
+          >
             <td class="text-left">{{ project.name }}</td>
             <td class="text-right">{{ project.feedFrames.length }}</td>
             <td class="text-right">{{ project.createdAt }}</td>
             <td class="text-right">
               <div class="row column items-end">
-                <q-btn rounded color="positive" label="Open Project" class="q-ma-sm" @click="goToProjectPage(project.id)" />
-                <q-btn rounded outline color="negative" class="q-ma-sm" label="Delete Project" @click.stop="deleteProject(index)" />
+                <q-btn rounded color="positive" label="Open Project" class="open-project q-ma-sm" @click="goToProjectPage(project.id)" />
+                <q-btn
+                  rounded
+                  outline
+                  color="negative"
+                  class="delete-project q-ma-sm"
+                  label="Delete Project"
+                  @click.stop="deleteProject(index)"
+                />
               </div>
             </td>
           </tr>

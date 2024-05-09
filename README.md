@@ -24,7 +24,7 @@ This project allows the end-user to create a project and connect the video camer
 
 ## Project Structure
 
-- `/cypress`: Contains all the testing features
+- `/cypress`: Contains all the e2e testing to simualte a running project mainly project creation and previous project handling
 - `/public`: Includes all the assets that we need for the project like images, icons and fonts
 - `/src`: All the logic of our application is here
 - `/src/assets`: Styling for the application together with Quasar configuration is placed here

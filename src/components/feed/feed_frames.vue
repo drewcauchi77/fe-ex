@@ -87,11 +87,12 @@ const saveProject = (): void => {
             :key="index"
             @click="setFrameDialog(false, index)"
             :class="{ 'cursor-pointer': canFramesBeEdited }"
+            class="frame-row"
           >
             <td class="text-left image-cell">
               <img :src="frame.image" class="frame" />
             </td>
-            <td class="text-right">
+            <td class="text-right frame-tags">
               <template v-if="frame.tags.length > 0">
                 <q-badge rounded color="primary" v-for="(tag, index) in frame.tags" :key="index" class="badge q-mr-sm">
                   <span>{{ tag }}</span>
@@ -102,8 +103,15 @@ const saveProject = (): void => {
             <td class="text-right">{{ frame.createdAt }}</td>
             <td class="text-right" v-if="canFramesBeEdited">
               <div class="row column items-end">
-                <q-btn rounded color="positive" label="Edit Frame" class="q-ma-sm" @click="setFrameDialog(false, index)" />
-                <q-btn rounded outline color="negative" class="q-ma-sm" label="Delete Frame" @click.stop="removeFrame(index)" />
+                <q-btn rounded color="positive" label="Edit Frame" class="edit-frame q-ma-sm" @click="setFrameDialog(false, index)" />
+                <q-btn
+                  rounded
+                  outline
+                  color="negative"
+                  class="delete-frame q-ma-sm"
+                  label="Delete Frame"
+                  @click.stop="removeFrame(index)"
+                />
               </div>
             </td>
           </tr>
@@ -116,7 +124,7 @@ const saveProject = (): void => {
     </q-markup-table>
 
     <div class="q-pt-md text-white text-center" v-if="canFramesBeEdited">
-      <q-btn color="primary" rounded label="Save Project" class="q-mt-sm" @click="saveProject()" />
+      <q-btn color="primary" rounded label="Save Project" class="save-project q-mt-sm" @click="saveProject()" />
     </div>
 
     <q-dialog v-model="openDialog" @beforeHide="setFrameDialog(true)" v-if="canFramesBeEdited">
