@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { QInput, QBadge } from 'quasar'
-import { useProjectStore } from '@/stores/project'
+import { useProjectStore } from '../../stores/project'
 import type { Ref } from 'vue'
 
 const projectStore = useProjectStore()

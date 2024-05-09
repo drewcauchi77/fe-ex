@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
 import { QSpinnerIos } from 'quasar'
-import { useProjectStore } from '@/stores/project'
-import { fireNotification } from '@/helpers/helpers'
+import { useProjectStore } from '../../stores/project'
+import { fireNotification } from '../../helpers/helpers'
 import type { Ref } from 'vue'
 import FeedFrames from './feed_frames.vue'
 

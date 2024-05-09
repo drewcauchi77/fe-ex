@@ -1,7 +1,7 @@
 import { ref, computed } from 'vue'
 import { defineStore, getActivePinia } from 'pinia'
 import type { Ref } from 'vue'
-import type { FeedFrame, Project } from '@/definitions/interfaces'
+import type { FeedFrame, Project } from '../definitions/interfaces'
 
 const useProjectStore = defineStore('project', () => {
   const $debug: boolean = (getActivePinia() as any)?._a.config.globalProperties.$debugPinia

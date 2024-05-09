@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import PageBreadcrumb from '@/components/shared/page_breadcrumb.vue'
+import PageBreadcrumb from '../components/shared/page_breadcrumb.vue'
 
 const props = defineProps<{
   message?: string

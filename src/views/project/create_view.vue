@@ -1,13 +1,13 @@
 <script setup lang="ts">
 import { ref, defineAsyncComponent } from 'vue'
 import { onBeforeRouteLeave } from 'vue-router'
-import { useProjectStore } from '@/stores/project'
+import { useProjectStore } from '../../stores/project'
 import type { Ref } from 'vue'
 import type { RouteLocationNormalizedLoaded, RouteLocationNormalized } from 'vue-router'
-import PageBreadcrumb from '@/components/shared/page_breadcrumb.vue'
-import ProjectName from '@/components/project/project_name.vue'
+import PageBreadcrumb from '../../components/shared/page_breadcrumb.vue'
+import ProjectName from '../../components/project/project_name.vue'
 
-const CaptureFeed = defineAsyncComponent(() => import('@/components/feed/capture_feed.vue'))
+const CaptureFeed = defineAsyncComponent(() => import('../../components/feed/capture_feed.vue'))
 
 const projectStore = useProjectStore()
 

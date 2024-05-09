@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { QCard, QSeparator, QCardSection, QCardActions } from 'quasar'
-import { useProjectStore } from '@/stores/project'
+import { useProjectStore } from '../../stores/project'
 import FrameTags from './frame_tags.vue'
 
 const projectStore = useProjectStore()

@@ -2,12 +2,12 @@
 import { ref, defineAsyncComponent } from 'vue'
 import { useRouter } from 'vue-router'
 import { QMarkupTable, QDialog, QBadge } from 'quasar'
-import { useProjectStore } from '@/stores/project'
-import { fireNotification } from '@/helpers/helpers'
+import { useProjectStore } from '../../stores/project'
+import { fireNotification } from '../../helpers/helpers'
 import type { Ref } from 'vue'
-import type { FeedFrame, Project } from '@/definitions/interfaces'
+import type { FeedFrame, Project } from '../../definitions/interfaces'
 
-const FrameEdit = defineAsyncComponent(() => import('@/components/frame/frame_edit.vue'))
+const FrameEdit = defineAsyncComponent(() => import('../frame/frame_edit.vue'))
 
 const router = useRouter()
 const projectStore = useProjectStore()

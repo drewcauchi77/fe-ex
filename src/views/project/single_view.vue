@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import { defineAsyncComponent } from 'vue'
 import { useRoute } from 'vue-router'
-import { useProjectStore } from '@/stores/project'
-import PageBreadcrumb from '@/components/shared/page_breadcrumb.vue'
+import { useProjectStore } from '../../stores/project'
+import PageBreadcrumb from '../../components/shared/page_breadcrumb.vue'
 
-const FeedFrames = defineAsyncComponent(() => import('@/components/feed/feed_frames.vue'))
-const ErrorView = defineAsyncComponent(() => import('@/views/error_view.vue'))
+const FeedFrames = defineAsyncComponent(() => import('../../components/feed/feed_frames.vue'))
+const ErrorView = defineAsyncComponent(() => import('../error_view.vue'))
 
 const route = useRoute()
 const projectStore = useProjectStore()

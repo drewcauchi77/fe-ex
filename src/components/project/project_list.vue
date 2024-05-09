@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { useRouter } from 'vue-router'
 import { QMarkupTable } from 'quasar'
-import { useProjectStore } from '@/stores/project'
-import { fireNotification } from '@/helpers/helpers'
+import { useProjectStore } from '../../stores/project'
+import { fireNotification } from '../../helpers/helpers'
 
 const router = useRouter()
 const projectStore = useProjectStore()

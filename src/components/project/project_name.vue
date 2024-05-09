@@ -2,8 +2,8 @@
 import { ref, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { QInput } from 'quasar'
-import { useProjectStore } from '@/stores/project'
-import { fireNotification } from '@/helpers/helpers'
+import { useProjectStore } from '../../stores/project'
+import { fireNotification } from '../../helpers/helpers'
 import type { Ref } from 'vue'
 import type { Router } from 'vue-router'
 
